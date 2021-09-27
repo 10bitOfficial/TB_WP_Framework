@@ -1,0 +1,11 @@
+{
+    "config": {
+        "platform": {
+            "php": "7.2"
+        }
+    },
+    "require": {
+        "monolog/monolog": "^2.3",
+        "brick/phonenumber": "^0.3.0"
+    }
+}
