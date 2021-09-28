@@ -45,7 +45,7 @@ class TB_WP_Framework {
 	public function load(){
 		$this->loadVendors();
 		$this->loadHelpers();
-		$this->loadCurl();
+		$this->loadAPI();
 		$this->loadHooks();
 		$this->loadWPSettings();
 	}
@@ -67,8 +67,8 @@ class TB_WP_Framework {
 	/**
 	 * @since 1.0.0
 	 */
-	public function loadCurl(){
-		require_once 'CURL/CURL.php';
+	public function loadAPI(){
+		require_once 'API/API.php';
 	}
 
 	/**

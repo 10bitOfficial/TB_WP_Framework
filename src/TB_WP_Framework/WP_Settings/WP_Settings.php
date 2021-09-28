@@ -3,7 +3,6 @@
 namespace TB_WP_Framework\WP_Settings;
 if(!defined('ABSPATH')){exit;}
 require_once 'Options.php';
-require_once 'PageTemplateParts.php';
 require_once 'SubMenuPage.php';
 require_once 'MenuPage.php';
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace TB_WP_Framework\CURL;
+namespace TB_WP_Framework\API;
 if(!defined('ABSPATH')){exit;}
 
 /**
  * Class Response
- * @package TB_WP_Framework\CURL
+ * @package TB_WP_Framework\API
  * @since 1.0.0
  * @author Eyal Borgman <www.linkedin.com/in/eyalborgman>
  */

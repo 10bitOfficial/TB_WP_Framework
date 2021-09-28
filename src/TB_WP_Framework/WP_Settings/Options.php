@@ -98,7 +98,7 @@ abstract class Options {
 	protected function initOptions() {
 		$this->options = get_option($this->optionsName,[]);
 		if (isset($_POST[$this->optionsUpdateTrigger])){
-			$newOptions = $_POST;
+			$newOptions = $this->sanitizeOptions($_POST);
 			unset($newOptions[$this->optionsUpdateTrigger]);
 			$this->setOptions($newOptions);
 		} else {
@@ -120,7 +120,8 @@ abstract class Options {
 	 * @since 1.0.0
 	 */
 	public function getUpdateHiddenInput(): string {
-		return "<input type='hidden' name='{$this->optionsUpdateTrigger}' value='Y'>";
+		$name = esc_attr($this->optionsUpdateTrigger);
+		return "<input type='hidden' name='{$name}' value='Y'>";
 	}
 
 	/**
@@ -181,6 +182,28 @@ abstract class Options {
 		}
 		$this->updateOptions();
 	}
+
+	/**
+	 * @param array $inputs
+	 *
+	 * @return array
+	 * @since 1.0.0
+	 */
+	public function sanitizeOptions(array $inputs): array {
+	foreach ($inputs as $input){
+		$this->sanitizeOption($input);
+	}
+	return $inputs;
+}
+
+	/**
+	 * @param $option
+	 *
+	 * @return mixed
+	 * @since 1.0.0
+	 */
+	abstract public function sanitizeOption(&$option);
+
 	/*---------------------------*/
 	/*------OPTIONS API----------*/
 	/*---------------------------*/
@@ -213,6 +236,7 @@ abstract class Options {
 		return $this->OptionsRouteAPI();
 	}
 
+
 	/**
 	 * @param \WP_REST_Request $request
 	 *
@@ -232,7 +256,7 @@ abstract class Options {
 	 */
 	public function postOptionsCallback(WP_REST_Request $request){
 		$data = $request->get_json_params();
-//		$this->log->debug(__FUNCTION__,['$data'=>[gettype($data),$data]]);
+		$this->sanitizeOptions($data);
 		$optionName = str_replace('_switch','',$data['name']);
 		$optionValue = $data['value']=='on'?$data['checked']:$data['value'];
 		$this->setOptions([
